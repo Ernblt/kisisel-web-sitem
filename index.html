@@ -177,6 +177,39 @@
             margin-right: 8px;
             font-size: 1.2rem;
         }
+        /*yukarı çık butonu */
+        .scroll-top-btn {
+            position: fixed; /*sayfada hep aynı yerde durur */
+            bottom: 30px; /*alt sayfadan boşluk */
+            right: 30px; /*sağdan boşluk */
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50%; /*tam yuvarlak */
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba (0, 210, 211, 0.5); /*neon parlama */
+
+            /*başlangıçta gizli yapıyoruz */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px); /*hafif aşağıda dursun */
+            transition: all 0.3ss ease; /*Yumuşak geçiş */
+            z-index: 1000; /*Her şeyin üstünde olsun */
+        }
+        /* JS ile eklenecek show sınıfı butonu görünür yapar */
+        .scroll-top-btn.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0); /*Kendi yerine gelsin */
+        }
+        /*üzerine gelince (hover) rengi tersine dönsün */
+        .scroll-top-btn:hover {
+            background-color: var(--white);
+            color: var(--primary-color);
+        }
+
         /* Çubuğun Doldurulan Kısmı (Turkuaz kısım) */
         .skill-progress {
             height: 100%;
@@ -274,6 +307,13 @@
             .hero-text h1 {
                 font-size: 2.rem;
             }
+            .scroll-top-btn {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 1.2rem;
+            }
         }
     </style>
     <body>
@@ -370,5 +410,29 @@
         <footer>
             <p>&copy; 2026 adın soyadın. Tüm hakları saklıdır.</p>
         </footer>
+        <button id="scrollTopBtn" class="scroll-top-btn">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <script>
+            // 1. butonu HTML'den seçiyoruz
+            const scrollTopBtn= document.getElementById(scrollTopBtn);
+
+            // 2. Sayfa kaydırıldığında ne olacağını belirliyoruz
+            window.addEventListener ("scroll",() => {
+                if (window.scrollY>300){
+                    scrollTopBtn.classList.add("show"), //Butonu gönster
+                } else {
+                    scrollTopBtn.classList.remove("show");//Butonu gizle
+                }
+            });
+            // 3. Butona tıklandığında ne olacağını belirliyoruz
+            scrollTopBtn.addEventListener("click",() => {
+                //sayfanın en üstüne top:0 yumuşak smooth çık
+                window.scrollTo({
+                    top: 0,
+                    behavior:"smooth"
+                })
+            })
+        </script>
     </body>
 </html>
